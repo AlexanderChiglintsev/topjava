@@ -30,27 +30,30 @@ public class UserMealsUtil {
     }
 
     public static List<UserMealWithExcess> filteredByCycles(List<UserMeal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
-        List<UserMealWithExcess> filteredList = new ArrayList<>();
         Map<LocalDate, Integer> calPerDay = new HashMap<>();
         meals.forEach(userMeal -> calPerDay.merge(userMeal.getDate(), userMeal.getCalories(), Integer::sum));
+        List<UserMealWithExcess> filteredList = new ArrayList<>();
         meals.forEach(userMeal -> {
             if (TimeUtil.isBetweenHalfOpen(userMeal.getDateTime().toLocalTime(), startTime, endTime)) {
-                filteredList.add(new UserMealWithExcess(userMeal, calPerDay.get(userMeal.getDate()) >= caloriesPerDay));
+                filteredList.add(UserMealConverter(userMeal, calPerDay.get(userMeal.getDate()) > caloriesPerDay));
             }
         });
         return filteredList;
     }
 
     public static List<UserMealWithExcess> filteredByStreams(List<UserMeal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
-        List<UserMealWithExcess> filteredList = new ArrayList<>();
         Map<LocalDate, Integer> calPerDay = meals.stream()
                 .collect(Collectors.groupingBy(UserMeal::getDate, Collectors.summingInt(UserMeal::getCalories)));
-        meals.stream()
+        return meals.stream()
                 .filter(userMeal -> TimeUtil.isBetweenHalfOpen(userMeal.getTime(), startTime, endTime))
-                .forEach(userMeal -> filteredList.add(new UserMealWithExcess(
-                        userMeal,
-                        calPerDay.get(userMeal.getDate()) >= caloriesPerDay))
+                .collect(
+                        ArrayList::new,
+                        (list, item) -> list.add(UserMealConverter(item, calPerDay.get(item.getDate()) > caloriesPerDay)),
+                        ArrayList::addAll
                 );
-        return filteredList;
+    }
+
+    private static UserMealWithExcess UserMealConverter(UserMeal um, boolean excess) {
+        return new UserMealWithExcess(um.getDateTime(), um.getDescription(), um.getCalories(), excess);
     }
 }
