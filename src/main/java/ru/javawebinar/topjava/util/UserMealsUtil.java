@@ -46,7 +46,7 @@ public class UserMealsUtil {
                 .collect(Collectors.groupingBy(UserMeal::getDate, Collectors.summingInt(UserMeal::getCalories)));
         return meals.stream()
                 .filter(userMeal -> TimeUtil.isBetweenHalfOpen(userMeal.getTime(), startTime, endTime))
-                .map((item) -> convertUserMeal(item, dailyCalories.get(item.getDate()) > caloriesPerDay))
+                .map(item -> convertUserMeal(item, dailyCalories.get(item.getDate()) > caloriesPerDay))
                 .collect(Collectors.toList());
     }
 
