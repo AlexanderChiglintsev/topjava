@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
+import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.Singleton;
 import ru.javawebinar.topjava.model.Storage;
 import ru.javawebinar.topjava.util.MealsUtil;
@@ -11,7 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.UUID;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -38,6 +41,16 @@ public class MealServlet extends HttpServlet {
                 break;
             case "delete":
                 storage.delete(request.getParameter("id"));
+                getListMeals(request, response);
+                break;
+            case "add":
+                storage.create(new Meal(
+                        UUID.randomUUID().toString(),
+                        LocalDateTime.parse(request.getParameter("date")),
+                        request.getParameter("description"),
+                        Integer.parseInt(request.getParameter("calories"))
+
+                ));
                 getListMeals(request, response);
                 break;
         }

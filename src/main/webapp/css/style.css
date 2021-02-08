@@ -9,6 +9,13 @@ th, td {
     padding: 5px;
 }
 
-#calories{
+#cal{
     text-align: center;
+}
+
+.form{
+    border-style: hidden;
+    font-size: 12pt;
+    alignment: center;
+    padding: 5px;
 }

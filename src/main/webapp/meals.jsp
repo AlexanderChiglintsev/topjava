@@ -35,12 +35,37 @@
         <tr bgcolor="${color}">
             <td><javatime:format value="${meal.dateTime}" style="MS" pattern="yyyy-MM-dd hh:mm"/></td>
             <td>${meal.description}</td>
-            <td id="calories">${meal.calories}</td>
-            <td><a href="meals?action=delete&id=${meal.id}">Редактировать</a></td>
-            <td><a href="">Удалить</a></td>
+            <td id="cal">${meal.calories}</td>
+            <td><a href="meals?action=delete&id=${meal.id}">Удалить</a></td>
+            <td><a href="">Редактировать</a></td>
         </tr>
     </c:forEach>
 </table>
+<br/>
+<form method="get" action="meals" enctype="application/x-www-form-urlencoded">
+    <fieldset>
+        <legend>Добавить прием пищи</legend>
+        <table>
+            <tr>
+                <td class="form"><label for="date">Дата</label></td>
+                <td class="form"><input type="datetime-local" name="date" id="date" required></td>
+            </tr>
+            <tr>
+                <td class="form"><label for="description">Описание</label></td>
+                <td class="form"><input type="text" name="date" id="description" required></td>
+            </tr>
+            <tr>
+                <td class="form"><label for="calories">Количество калорий</label></td>
+                <td class="form"><input type="number" min="0" max="1000" step="10" name="date" id="calories" required></td>
+            </tr>
+            <tr>
+                <td class="form"><input type="hidden" name="action" value="add"></td>
+                <td class="form"><button type="submit">Добавить</button></td>
+            </tr>
+        </table>
+    </fieldset>
+</form>
+
 
 </body>
 </html>
