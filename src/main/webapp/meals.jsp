@@ -18,8 +18,8 @@
         <th>Дата</th>
         <th>Описание</th>
         <th>Количество калорий</th>
-        <th>Удалить</th>
-        <th>Редактировать</th>
+        <th></th>
+        <th></th>
     </tr>
     <jsp:useBean id="list" scope="request" type="java.util.List"/>
     <c:forEach var="meal" items="${list}">
@@ -36,8 +36,8 @@
             <td><javatime:format value="${meal.dateTime}" style="MS" pattern="yyyy-MM-dd hh:mm"/></td>
             <td>${meal.description}</td>
             <td id="calories">${meal.calories}</td>
-            <td></td>
-            <td></td>
+            <td><a href="meals?action=delete&id=${meal.id}">Редактировать</a></td>
+            <td><a href="">Удалить</a></td>
         </tr>
     </c:forEach>
 </table>

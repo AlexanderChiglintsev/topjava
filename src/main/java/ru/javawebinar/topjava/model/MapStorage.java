@@ -24,8 +24,8 @@ public class MapStorage implements Storage {
     }
 
     @Override
-    public void delete(Meal meal) {
-        meals.remove(meal.getId());
+    public void delete(String id) {
+        meals.remove(id);
     }
 
     @Override
