@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,6 @@ public class MapStorage implements Storage {
 
     @Override
     public List<Meal> getAll() {
-        return (List<Meal>) meals.values();
+        return new ArrayList<>(meals.values());
     }
 }

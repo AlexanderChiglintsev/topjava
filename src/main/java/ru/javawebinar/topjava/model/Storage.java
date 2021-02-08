@@ -1,6 +1,6 @@
 package ru.javawebinar.topjava.model;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface Storage {
 
@@ -12,5 +12,5 @@ public interface Storage {
 
     void delete(Meal meal);
 
-    Collection<Meal> getAll();
+    List<Meal> getAll();
 }

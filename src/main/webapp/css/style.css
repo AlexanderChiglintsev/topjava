@@ -1,0 +1,14 @@
+table {
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 2px solid;
+    font-size: 12pt;
+    alignment: center;
+    padding: 5px;
+}
+
+#calories{
+    text-align: center;
+}
