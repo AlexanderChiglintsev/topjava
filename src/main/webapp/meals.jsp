@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://sargue.net/jsptags/time" prefix="javatime" %>
 
 <html lang="ru">
 <head>
@@ -32,7 +33,7 @@
             </c:otherwise>
         </c:choose>
         <tr bgcolor="${color}">
-            <td>${meal.date}&nbsp;${meal.time}</td>
+            <td><javatime:format value="${meal.dateTime}" style="MS" pattern="yyyy-MM-dd hh:mm"/></td>
             <td>${meal.description}</td>
             <td id="calories">${meal.calories}</td>
             <td></td>
