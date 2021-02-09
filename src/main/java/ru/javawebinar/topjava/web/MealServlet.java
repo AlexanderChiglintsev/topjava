@@ -36,7 +36,7 @@ public class MealServlet extends HttpServlet {
             case "delete":
                 log.debug("Action = delete");
                 storage.delete(request.getParameter("id"));
-                getListMeals(request, response);
+                response.sendRedirect("meals");
                 return;
             case "add":
                 log.debug("Action = add");
@@ -46,7 +46,7 @@ public class MealServlet extends HttpServlet {
                         request.getParameter("description"),
                         Integer.parseInt(request.getParameter("calories"))
                 ));
-                getListMeals(request, response);
+                response.sendRedirect("meals");
                 return;
             case "edit":
                 log.debug("Action = edit");
@@ -61,19 +61,15 @@ public class MealServlet extends HttpServlet {
                         request.getParameter("description"),
                         Integer.parseInt(request.getParameter("calories"))
                 ));
-                getListMeals(request, response);
+                response.sendRedirect("meals");
                 return;
             default:
-                getListMeals(request, response);
+                request.setAttribute("list", MealsUtil.filteredByStreams(
+                        storage.getAll(),
+                        LocalTime.of(0, 0), LocalTime.of(23, 59), 2000)
+                );
+                log.debug("Forward to list of meals (meals.jsp)");
+                request.getRequestDispatcher("meals.jsp").forward(request, response);
         }
-    }
-
-    private void getListMeals(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("list", MealsUtil.filteredByStreams(
-                storage.getAll(),
-                LocalTime.of(0, 0), LocalTime.of(23, 59), 2000)
-        );
-        log.debug("Forward to list of meals (meals.jsp)");
-        request.getRequestDispatcher("meals.jsp").forward(request, response);
     }
 }
