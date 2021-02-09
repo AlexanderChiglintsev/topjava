@@ -40,6 +40,7 @@
                 </td>
                 <td class="form">
                     <button type="submit">Сохранить</button>
+                    <button onclick="window.history.back()">Отменить</button>
                 </td>
             </tr>
         </table>
