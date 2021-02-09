@@ -5,7 +5,7 @@ import java.time.Month;
 import java.util.UUID;
 
 public class Singleton {
-    private static Singleton instance;
+    private volatile static Singleton instance;
     private final Storage storage;
 
     private Singleton() {
@@ -24,7 +24,13 @@ public class Singleton {
     }
 
     public static Singleton getInstance(){
-        if (instance == null) instance = new Singleton();
+        if (instance == null) {
+            synchronized (Singleton.class) {
+                if (instance == null) {
+                    instance = new Singleton();
+                }
+            }
+        }
         return instance;
     }
 }
