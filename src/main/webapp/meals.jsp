@@ -24,8 +24,8 @@
     <jsp:useBean id="list" scope="request" type="java.util.List"/>
     <c:forEach var="meal" items="${list}">
         <jsp:useBean id="meal" type="ru.javawebinar.topjava.model.MealTo"/>
-        <c:set var="color" value="${meal.excess == true ? 'lightcoral' : 'lightgreen'}"/>
-        <tr bgcolor="${color}">
+        <c:set var="color" value="${meal.excess == true ? 'redrow' : 'greenrow'}"/>
+        <tr class="${color}">
             <td><javatime:format value="${meal.dateTime}" style="MS" pattern="yyyy-MM-dd hh:mm"/></td>
             <td>${meal.description}</td>
             <td id="cal">${meal.calories}</td>

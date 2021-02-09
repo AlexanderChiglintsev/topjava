@@ -73,7 +73,7 @@ public class MealServlet extends HttpServlet {
                 storage.getAll(),
                 LocalTime.of(0, 0), LocalTime.of(23, 59), 2000)
         );
-        log.debug("Forward to list of meals");
+        log.debug("Forward to list of meals (meals.jsp)");
         request.getRequestDispatcher("meals.jsp").forward(request, response);
     }
 }

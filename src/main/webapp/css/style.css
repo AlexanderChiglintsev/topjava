@@ -1,3 +1,7 @@
+body {
+    background-color: aliceblue;
+}
+
 table {
     border-collapse: collapse;
 }
@@ -9,13 +13,29 @@ th, td {
     padding: 5px;
 }
 
-#cal{
+input {
+    width: 300px;
+}
+
+form {
+    width: 480px;
+}
+
+#cal {
     text-align: center;
 }
 
-.form{
+.form {
     border-style: hidden;
     font-size: 12pt;
     alignment: center;
     padding: 5px;
+}
+
+.greenrow {
+    background-color: lightgreen;
+}
+
+.redrow {
+    background-color: lightcoral;
 }

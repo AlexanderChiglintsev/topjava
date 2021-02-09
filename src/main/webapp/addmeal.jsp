@@ -13,8 +13,6 @@
 <hr>
 <h2>Edit meal</h2>
 <br/>
-
-<br/>
 <jsp:useBean id="meal" scope="request" type="ru.javawebinar.topjava.model.Meal"/>
 <form method="get" action="meals" enctype="application/x-www-form-urlencoded">
     <fieldset>
