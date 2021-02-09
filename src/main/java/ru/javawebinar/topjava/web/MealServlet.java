@@ -28,33 +28,43 @@ public class MealServlet extends HttpServlet {
         storage = Singleton.getInstance().getStorage();
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
         switch (action) {
-            case "view":
-                getListMeals(request, response);
-                break;
             case "delete":
+                log.debug("Action = delete");
                 storage.delete(request.getParameter("id"));
                 getListMeals(request, response);
-                break;
+                return;
             case "add":
+                log.debug("Action = add");
                 storage.create(new Meal(
                         UUID.randomUUID().toString(),
                         LocalDateTime.parse(request.getParameter("date")),
                         request.getParameter("description"),
                         Integer.parseInt(request.getParameter("calories"))
-
                 ));
                 getListMeals(request, response);
-                break;
+                return;
+            case "edit":
+                log.debug("Action = edit");
+                request.setAttribute("meal", storage.read(request.getParameter("id")));
+                request.getRequestDispatcher("addmeal.jsp").forward(request, response);
+                return;
+            case "update":
+                log.debug("Action = update");
+                storage.update(new Meal(
+                        request.getParameter("id"),
+                        LocalDateTime.parse(request.getParameter("date")),
+                        request.getParameter("description"),
+                        Integer.parseInt(request.getParameter("calories"))
+                ));
+                getListMeals(request, response);
+                return;
         }
-
+        //View action
+        getListMeals(request, response);
     }
 
     private void getListMeals(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -62,6 +72,7 @@ public class MealServlet extends HttpServlet {
                 storage.getAll(),
                 LocalTime.of(0, 0), LocalTime.of(23, 59), 2000)
         );
+        log.debug("Forward to list of meals");
         request.getRequestDispatcher("meals.jsp").forward(request, response);
     }
 }
