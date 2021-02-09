@@ -1,12 +1,12 @@
 package ru.javawebinar.topjava.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class MapStorage implements Storage {
-    Map<String, Meal> meals = new HashMap<>();
+    Map<String, Meal> meals = new ConcurrentHashMap<>();
 
     @Override
     public void create(Meal meal) {
