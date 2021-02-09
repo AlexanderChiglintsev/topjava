@@ -31,6 +31,7 @@ public class MealServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
+        action = (action != null ? action : "");
         switch (action) {
             case "delete":
                 log.debug("Action = delete");
@@ -62,9 +63,9 @@ public class MealServlet extends HttpServlet {
                 ));
                 getListMeals(request, response);
                 return;
+            default:
+                getListMeals(request, response);
         }
-        //View action
-        getListMeals(request, response);
     }
 
     private void getListMeals(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
