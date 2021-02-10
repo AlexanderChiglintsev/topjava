@@ -35,7 +35,6 @@
             </tr>
             <tr>
                 <td>
-                    <input type="hidden" name="action" value="update">
                     <input type="hidden" name="id" value="${meal.id}">
                 </td>
                 <td>

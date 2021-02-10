@@ -31,7 +31,7 @@
             </tr>
             <tr>
                 <td>
-                    <input type="hidden" name="action" value="add">
+
                 </td>
                 <td>
                     <button type="submit">Добавить</button>
