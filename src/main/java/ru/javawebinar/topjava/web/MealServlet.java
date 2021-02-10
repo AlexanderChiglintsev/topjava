@@ -56,11 +56,7 @@ public class MealServlet extends HttpServlet {
                 return;
             default:
                 log.debug("Not correct action, Forward to list of meal (meals.jsp)");
-                request.setAttribute("list", MealsUtil.filteredByStreams(
-                        storage.getAll(),
-                        LocalTime.of(0, 0), LocalTime.of(23, 59), 2000)
-                );
-                request.getRequestDispatcher("meals.jsp").forward(request, response);
+                getMealsList(request, response);
         }
     }
 
@@ -77,15 +73,27 @@ public class MealServlet extends HttpServlet {
             case "edit":
                 log.debug("Action = edit");
                 request.setAttribute("meal", storage.read(request.getParameter("id")));
-                request.getRequestDispatcher("editmeal.jsp").forward(request, response);
+                request.getRequestDispatcher("editMeal.jsp").forward(request, response);
+                return;
+            case "addform":
+                log.debug("Action = addform");
+                request.getRequestDispatcher("addMeal.jsp").forward(request, response);
                 return;
             default:
                 request.setAttribute("list", MealsUtil.filteredByStreams(
                         storage.getAll(),
-                        LocalTime.of(0, 0), LocalTime.of(23, 59), 2000)
+                        LocalTime.MIN, LocalTime.MAX, MealsUtil.LIMIT_CALORIES)
                 );
                 log.debug("Forward to list of meals (meals.jsp)");
-                request.getRequestDispatcher("meals.jsp").forward(request, response);
+                getMealsList(request, response);
         }
+    }
+
+    private void getMealsList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("list", MealsUtil.filteredByStreams(
+                storage.getAll(),
+                LocalTime.MIN, LocalTime.MAX, MealsUtil.LIMIT_CALORIES)
+        );
+        request.getRequestDispatcher("meals.jsp").forward(request, response);
     }
 }

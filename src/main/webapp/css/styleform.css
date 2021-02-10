@@ -1,0 +1,22 @@
+body {
+    background-color: aliceblue;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+th, td {
+    font-size: 12pt;
+    alignment: center;
+    padding: 5px;
+}
+
+input {
+    width: 300px;
+}
+
+form {
+    width: 480px;
+}
+

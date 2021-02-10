@@ -14,6 +14,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class MealsUtil {
+    public static final int LIMIT_CALORIES = 2000;
+
     public static void main(String[] args) {
         List<Meal> meals = Arrays.asList(
                 new Meal(UUID.randomUUID().toString(), LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500),
