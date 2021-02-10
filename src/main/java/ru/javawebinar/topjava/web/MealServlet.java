@@ -27,16 +27,11 @@ public class MealServlet extends HttpServlet {
         storage = new MealMapStorage();
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
         action = (action != null ? action : "");
         switch (action) {
-            case "delete":
-                log.debug("Action = delete");
-                storage.delete(request.getParameter("id"));
-                response.sendRedirect("meals");
-                return;
             case "add":
                 log.debug("Action = add");
                 Meal newMeal = new Meal(
@@ -48,11 +43,6 @@ public class MealServlet extends HttpServlet {
                 if (storage.create(newMeal) == null) log.error("Can't add new meal!");
                 response.sendRedirect("meals");
                 return;
-            case "edit":
-                log.debug("Action = edit");
-                request.setAttribute("meal", storage.read(request.getParameter("id")));
-                request.getRequestDispatcher("addmeal.jsp").forward(request, response);
-                return;
             case "update":
                 log.debug("Action = update");
                 Meal updatedMeal = new Meal(
@@ -63,6 +53,31 @@ public class MealServlet extends HttpServlet {
                 );
                 if (storage.update(updatedMeal) == null) log.error("Can't update meal!");
                 response.sendRedirect("meals");
+                return;
+            default:
+                log.debug("Not correct action, Forward to list of meal (meals.jsp)");
+                request.setAttribute("list", MealsUtil.filteredByStreams(
+                        storage.getAll(),
+                        LocalTime.of(0, 0), LocalTime.of(23, 59), 2000)
+                );
+                request.getRequestDispatcher("meals.jsp").forward(request, response);
+        }
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        String action = request.getParameter("action");
+        action = (action != null ? action : "");
+        switch (action) {
+            case "delete":
+                log.debug("Action = delete");
+                storage.delete(request.getParameter("id"));
+                response.sendRedirect("meals");
+                return;
+            case "edit":
+                log.debug("Action = edit");
+                request.setAttribute("meal", storage.read(request.getParameter("id")));
+                request.getRequestDispatcher("editmeal.jsp").forward(request, response);
                 return;
             default:
                 request.setAttribute("list", MealsUtil.filteredByStreams(

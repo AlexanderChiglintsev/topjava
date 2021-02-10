@@ -14,7 +14,7 @@
 <h2>Edit meal</h2>
 <br/>
 <jsp:useBean id="meal" scope="request" type="ru.javawebinar.topjava.model.Meal"/>
-<form method="get" action="meals" enctype="application/x-www-form-urlencoded">
+<form method="post" action="meals" enctype="application/x-www-form-urlencoded">
     <fieldset>
         <legend>Редактировать прием пищи</legend>
         <table>

@@ -35,7 +35,7 @@
     </c:forEach>
 </table>
 <br/>
-<form method="get" action="meals" enctype="application/x-www-form-urlencoded">
+<form method="post" action="meals" enctype="application/x-www-form-urlencoded">
     <fieldset>
         <legend>Добавить прием пищи</legend>
         <table>
