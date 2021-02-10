@@ -56,7 +56,7 @@ public class MealServlet extends HttpServlet {
                 return;
             default:
                 log.debug("Not correct action, Forward to list of meal (meals.jsp)");
-                getMealsList(request, response);
+                showAll(request, response);
         }
     }
 
@@ -85,11 +85,11 @@ public class MealServlet extends HttpServlet {
                         LocalTime.MIN, LocalTime.MAX, MealsUtil.LIMIT_CALORIES)
                 );
                 log.debug("Forward to list of meals (meals.jsp)");
-                getMealsList(request, response);
+                showAll(request, response);
         }
     }
 
-    private void getMealsList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void showAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("list", MealsUtil.filteredByStreams(
                 storage.getAll(),
                 LocalTime.MIN, LocalTime.MAX, MealsUtil.LIMIT_CALORIES)
