@@ -1,9 +1,11 @@
 package ru.javawebinar.topjava.repository.inmemory;
 
 import org.springframework.stereotype.Repository;
+import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +17,18 @@ import java.util.stream.Collectors;
 public class InMemoryUserRepository implements UserRepository {
     private final Map<Integer, User> repository = new ConcurrentHashMap<>();
     private final AtomicInteger counter = new AtomicInteger(0);
+
+    public static final List<User> users = Arrays.asList(
+            new User(null, "Ivan", "test1@test.tt", "3", Role.USER),
+            new User(null, "Alex", "test2@test.tt", "3", Role.ADMIN),
+            new User(null, "John", "test3@test.tt", "3", Role.USER),
+            new User(null, "Elisabeth", "test4@test.tt", "3", Role.ADMIN),
+            new User(null, "Lawrence", "test5@test.tt", "3", Role.USER)
+    );
+
+    {
+        users.forEach(this::save);
+    }
 
     @Override
     public boolean delete(int id) {
