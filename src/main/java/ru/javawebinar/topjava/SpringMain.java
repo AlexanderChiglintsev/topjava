@@ -36,6 +36,12 @@ public class SpringMain {
             mealController.update(newMeal, 2);
             System.out.println("Filtered meals after update:");
             mealController.getAllFiltered(LocalTime.of(9, 0), LocalTime.of(14, 0)).forEach(System.out::println);
+            System.out.println("Delete meal:");
+            mealController.delete(1);
+            System.out.println("Filtered meals after delete:");
+            mealController.getAllFiltered(LocalTime.of(9, 0), LocalTime.of(14, 0)).forEach(System.out::println);
+            System.out.println("Delete meal of another user:");
+            mealController.get(5);
             System.out.println("Get meal of another user:");
             mealController.get(5);
         }

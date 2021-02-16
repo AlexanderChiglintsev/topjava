@@ -53,13 +53,18 @@ public class MealRestController {
         return service.getAll(SecurityUtil.authUserId());
     }
 
+    public List<MealTo> getAllFiltered(LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime) {
+        log.info("getAllFiltered");
+        return service.getAllFiltered(startDate, startTime, endDate, endTime, SecurityUtil.authUserId());
+    }
+
     public List<MealTo> getAllFiltered(LocalTime startTime, LocalTime endTime) {
         log.info("getAllFiltered");
         return service.getAllFiltered(LocalDate.MIN, startTime, LocalDate.MAX, endTime, SecurityUtil.authUserId());
     }
 
-    public List<MealTo> getAllFiltered(LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime) {
+    public List<MealTo> getAllFiltered() {
         log.info("getAllFiltered");
-        return service.getAllFiltered(startDate, startTime, endDate, endTime, SecurityUtil.authUserId());
+        return service.getAll(SecurityUtil.authUserId());
     }
 }
