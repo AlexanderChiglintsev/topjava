@@ -65,7 +65,7 @@ public class InMemoryMealRepository implements MealRepository {
         return repository.values().stream()
                 .filter(meal -> meal.getUserId().equals(userId))
                 .filter(meal -> DateTimeUtil.isBetween(meal.getDate(), startDate, endDate))
-                .sorted(Comparator.comparing(Meal::getDate).reversed())
+                .sorted(Comparator.comparing(Meal::getDateTime).reversed())
                 .collect(Collectors.toList());
     }
 }
