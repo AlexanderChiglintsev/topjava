@@ -19,21 +19,20 @@ public class InMemoryMealRepository implements MealRepository {
     private final AtomicInteger counter = new AtomicInteger(0);
 
     {
-        MealsUtil.meals.forEach(meal -> save(meal, meal.getUserId()));
+        MealsUtil.meals1.forEach(meal -> save(meal, 1));
+        MealsUtil.meals2.forEach(meal -> save(meal, 2));
     }
 
     @Override
     public Meal save(Meal meal, int userId) {
         if (meal.isNew()) {
             meal.setId(counter.incrementAndGet());
-            meal.setUserId(userId);
             repository.computeIfAbsent(userId, k -> new HashMap<>());
             repository.get(userId).put(meal.getId(), meal);
             return meal;
         }
         // handle case: update, but not present in storage
         if (get(meal.getId(), userId) != null) {
-            meal.setUserId(userId);
             return repository.get(userId).put(meal.getId(), meal);
         }
         return null;
@@ -42,22 +41,23 @@ public class InMemoryMealRepository implements MealRepository {
     @Override
     public boolean delete(int id, int userId) {
         if (get(id, userId) != null) {
-            return repository.get(userId).remove(id) != null;
+            repository.get(userId).remove(id);
+            return true;
         }
         return false;
     }
 
     @Override
     public Meal get(int id, int userId) {
-        Meal meal = repository.get(userId).get(id);
-        if ((meal != null) && (meal.getUserId() == userId)) {
-            return meal;
-        }
-        return null;
+        HashMap<Integer, Meal> userMeals = repository.get(userId);
+        return userMeals.get(id);
     }
 
     @Override
     public List<Meal> getAll(int userId) {
+        if (repository.get(userId) == null) {
+            return Collections.emptyList();
+        }
         return getAllWithFilter(meal -> true, userId);
     }
 

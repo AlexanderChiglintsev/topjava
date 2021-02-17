@@ -33,7 +33,7 @@ public class SpringMain {
             mealController.getAllFiltered(LocalDate.MIN, LocalTime.of(9, 0), LocalDate.MAX, LocalTime.of(14, 0)).forEach(System.out::println);
             System.out.println("Edit meals:");
             Meal oldMeal = mealController.get(2);
-            Meal newMeal = new Meal(oldMeal.getId(), oldMeal.getDateTime(), oldMeal.getDescription(), 1200, oldMeal.getUserId());
+            Meal newMeal = new Meal(oldMeal.getId(), oldMeal.getDateTime(), oldMeal.getDescription(), 1200);
             mealController.update(newMeal, 2);
             System.out.println("Filtered meals after update:");
             mealController.getAllFiltered(LocalDate.MIN, LocalTime.of(9, 0), LocalDate.MAX, LocalTime.of(14, 0)).forEach(System.out::println);
@@ -42,9 +42,9 @@ public class SpringMain {
             System.out.println("Filtered meals after delete:");
             mealController.getAllFiltered(LocalDate.MIN, LocalTime.of(9, 0), LocalDate.MAX, LocalTime.of(14, 0)).forEach(System.out::println);
             System.out.println("Delete meal of another user:");
-            mealController.get(5);
+            mealController.delete(9);
             System.out.println("Get meal of another user:");
-            mealController.get(5);
+            mealController.get(9);
         }
     }
 }
