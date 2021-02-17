@@ -20,7 +20,7 @@ public class MealServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(MealServlet.class);
 
     private ConfigurableApplicationContext appCtx;
-    MealRestController mealController;
+    private MealRestController mealController;
 
     @Override
     public void init() {
@@ -34,10 +34,11 @@ public class MealServlet extends HttpServlet {
         String id = request.getParameter("id");
 
         Meal meal = new Meal(id.isEmpty() ? null : Integer.valueOf(id),
-                null,
                 LocalDateTime.parse(request.getParameter("dateTime")),
                 request.getParameter("description"),
-                Integer.parseInt(request.getParameter("calories")));
+                Integer.parseInt(request.getParameter("calories")),
+                0
+        );
 
         log.info(meal.isNew() ? "Create {}" : "Update {}", meal);
         if (id.isEmpty()) {
@@ -62,7 +63,7 @@ public class MealServlet extends HttpServlet {
             case "create":
             case "update":
                 final Meal meal = "create".equals(action) ?
-                        new Meal(1, LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000) :
+                        new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000, 1) :
                         mealController.get(getId(request));
                 request.setAttribute("meal", meal);
                 request.getRequestDispatcher("/mealForm.jsp").forward(request, response);
@@ -78,14 +79,14 @@ public class MealServlet extends HttpServlet {
         }
     }
 
+    @Override
+    public void destroy() {
+        appCtx.close();
+        super.destroy();
+    }
+
     private int getId(HttpServletRequest request) {
         String paramId = Objects.requireNonNull(request.getParameter("id"));
         return Integer.parseInt(paramId);
-    }
-
-    @Override
-    public void destroy() {
-        super.destroy();
-        appCtx.close();
     }
 }

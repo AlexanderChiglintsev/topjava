@@ -16,11 +16,9 @@ import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFoundWithId;
 public class MealService {
 
     private final MealRepository repository;
-    private final UserService userService;
 
-    public MealService(MealRepository repository, UserService userService) {
+    public MealService(MealRepository repository) {
         this.repository = repository;
-        this.userService = userService;
     }
 
     public Meal create(Meal meal, Integer userId) {
@@ -39,19 +37,19 @@ public class MealService {
         checkNotFoundWithId(repository.save(meal, userId), meal.getId());
     }
 
-    public List<MealTo> getAll(Integer userId) {
-        return MealsUtil.getFilteredTos(
+    public List<MealTo> getAll(Integer userId, int calories) {
+        return MealsUtil.getTos(
                 repository.getAll(userId),
-                userService.get(userId).getCaloriesPerDay(),
-                LocalTime.MIN,
-                LocalTime.MAX);
+                calories
+        );
     }
 
-    public List<MealTo> getAllFiltered(LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime, Integer userId) {
+    public List<MealTo> getAllFiltered(LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime, Integer userId, int calories) {
         return MealsUtil.getFilteredTos(
                 repository.getAllFiltered(startDate, endDate, userId),
-                userService.get(userId).getCaloriesPerDay(),
+                calories,
                 startTime,
-                endTime);
+                endTime
+        );
     }
 }
