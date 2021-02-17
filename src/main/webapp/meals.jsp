@@ -21,6 +21,28 @@
     <h3><a href="index.html">Home</a></h3>
     <hr/>
     <h2>Meals for user with ID = ${userid}</h2>
+    <br><br>
+    <form method="get" action="meals">
+        <dl>
+            <dt>Start date:</dt>
+            <dd><input type="date" name="dateBegin"></dd>
+        </dl>
+        <dl>
+            <dt>End date:</dt>
+            <dd><input type="date" name="dateEnd"></dd>
+        </dl>
+        <dl>
+            <dt>Start time:</dt>
+            <dd><input type="time" name="timeBegin"></dd>
+        </dl>
+        <dl>
+            <dt>End time:</dt>
+            <dd><input type="time" name="timeEnd"></dd>
+        </dl>
+        <input type="hidden" name="action" value="filtered">
+        <button type="submit">Set filter</button>
+    </form>
+    <br><br>
     <a href="meals?action=create">Add Meal</a>
     <br><br>
     <table border="1" cellpadding="8" cellspacing="0">
