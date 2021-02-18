@@ -25,19 +25,19 @@
     <form method="get" action="meals">
         <dl>
             <dt>Start date:</dt>
-            <dd><input type="date" name="dateBegin"></dd>
+            <dd><input type="date" name="dateBegin" value="${dateBegin}"></dd>
         </dl>
         <dl>
             <dt>End date:</dt>
-            <dd><input type="date" name="dateEnd"></dd>
+            <dd><input type="date" name="dateEnd" value="${dateEnd}"></dd>
         </dl>
         <dl>
             <dt>Start time:</dt>
-            <dd><input type="time" name="timeBegin"></dd>
+            <dd><input type="time" name="timeBegin" value="${timeBegin}"></dd>
         </dl>
         <dl>
             <dt>End time:</dt>
-            <dd><input type="time" name="timeEnd"></dd>
+            <dd><input type="time" name="timeEnd" value="${timeEnd}"></dd>
         </dl>
         <input type="hidden" name="action" value="filtered">
         <button type="submit">Set filter</button>

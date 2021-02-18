@@ -75,13 +75,17 @@ public class MealServlet extends HttpServlet {
                 String dEnd = request.getParameter("dateEnd");
                 String tBegin = request.getParameter("timeBegin");
                 String tEnd = request.getParameter("timeEnd");
-                LocalDate dateBegin = dBegin.isEmpty() ? LocalDate.MIN : LocalDate.parse(request.getParameter("dateBegin"));
-                LocalDate dateEnd = dEnd.isEmpty() ? LocalDate.MAX : LocalDate.parse(request.getParameter("dateEnd"));
-                LocalTime timeBegin = tBegin.isEmpty() ? LocalTime.MIN : LocalTime.parse(request.getParameter("timeBegin"));
-                LocalTime timeEnd = tEnd.isEmpty() ? LocalTime.MAX : LocalTime.parse(request.getParameter("timeEnd"));
+                LocalDate dateBegin = dBegin.isEmpty() ? null : LocalDate.parse(request.getParameter("dateBegin"));
+                LocalDate dateEnd = dEnd.isEmpty() ? null : LocalDate.parse(request.getParameter("dateEnd"));
+                LocalTime timeBegin = tBegin.isEmpty() ? null : LocalTime.parse(request.getParameter("timeBegin"));
+                LocalTime timeEnd = tEnd.isEmpty() ? null : LocalTime.parse(request.getParameter("timeEnd"));
                 request.setAttribute("meals",
                         mealController.getAllFiltered(dateBegin, timeBegin, dateEnd, timeEnd));
                 request.setAttribute("userid", SecurityUtil.authUserId());
+                request.setAttribute("dateBegin", dBegin);
+                request.setAttribute("dateEnd", dEnd);
+                request.setAttribute("timeBegin", tBegin);
+                request.setAttribute("timeEnd", tEnd);
                 request.getRequestDispatcher("/meals.jsp").forward(request, response);
             case "all":
             default:

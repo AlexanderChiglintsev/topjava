@@ -6,10 +6,14 @@
 <body>
 <h3>Проект <a href="https://github.com/JavaWebinar/topjava" target="_blank">Java Enterprise (Topjava)</a></h3>
 <hr>
-<form method="get" action="users">
-    <input name="userid" type="radio" value="1" checked>UserID = 1
-    <br/>
-    <input name="userid" type="radio" value="2">UserID = 2
+<form id="form" method="get" action="users">
+    <p>
+        <label for="selector">Choose user ID:</label>
+        <select id="selector" name="userid" form="form">
+            <option value="1">ID #1</option>
+            <option value="2">ID #2</option>
+        </select>
+    </p>
     <input name="action" type="hidden" value="setuser">
     <p><input type="submit" value="Авторизоваться"></p>
 </form>
