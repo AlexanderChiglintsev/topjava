@@ -1,4 +1,4 @@
-https://travis-ci.org/AlexanderChiglintsev/topjava.svg?branch=master
+[![Build Status](https://travis-ci.org/AlexanderChiglintsev/topjava.svg?branch=master)](https://travis-ci.com/JavaWebinar/topjava)
 
 Java Enterprise Online Project 
 ===============================
