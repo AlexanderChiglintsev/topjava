@@ -9,9 +9,25 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+@NamedQueries({
+        @NamedQuery(name = Meal.UPDATE, query = "UPDATE Meal m " +
+                "SET m.dateTime =: dt, m.description =: description, m.calories =: calories " +
+                "WHERE m.id =: mealId AND m.user.id =: userId"),
+        @NamedQuery(name = Meal.DELETE, query = "DELETE FROM Meal m " +
+                "WHERE m.id =: mealId AND m.user.id =: userId"),
+        @NamedQuery(name = Meal.ALL_SORTED, query = "SELECT m FROM Meal m " +
+                "WHERE m.user.id =: userId ORDER BY m.dateTime DESC"),
+        @NamedQuery(name = Meal.ALL_FILTERED, query = "SELECT m FROM Meal m " +
+                "WHERE m.user.id =: userId AND m.dateTime >=: startDate AND m.dateTime <: endDate ORDER BY m.dateTime DESC")
+})
 @Entity
 @Table(name = "meals", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date_time"}, name = "user_datetime_idx")})
 public class Meal extends AbstractBaseEntity {
+
+    public static final String UPDATE = "Meal.update";
+    public static final String DELETE = "Meal.delete";
+    public static final String ALL_SORTED = "Meal.getAll";
+    public static final String ALL_FILTERED = "Meal.getAllFiltered";
 
     @Column(name = "date_time", nullable = false)
     @NotNull
