@@ -27,8 +27,10 @@ public class JpaMealRepository implements MealRepository {
             meal.setUser(ref);
             em.persist(meal);
         } else {
-            //Alternative way
+            //Alternative way - slower
             /*Meal updatedMeal = em.find(Meal.class, meal.getId());
+            User ref = em.getReference(User.class, userId);
+            meal.setUser(ref);
             return updatedMeal.getUser().getId() == userId ? em.merge(meal) : null;*/
 
             Query query = em.createNamedQuery(Meal.UPDATE)
