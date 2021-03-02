@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/AlexanderChiglintsev/topjava.svg?branch=master)](https://travis-ci.com/JavaWebinar/topjava)
+[![Build Status](https://travis-ci.org/AlexanderChiglintsev/topjava.svg?branch=master)](https://travis-ci.com/AlexanderChiglintsev/topjava)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/b7e7ba6485d9465a89c76d4fdb5233f3)](https://www.codacy.com/gh/AlexanderChiglintsev/topjava/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=AlexanderChiglintsev/topjava&amp;utm_campaign=Badge_Grade)
 
 Java Enterprise Online Project 
