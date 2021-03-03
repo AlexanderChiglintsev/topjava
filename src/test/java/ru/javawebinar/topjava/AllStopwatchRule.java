@@ -15,14 +15,10 @@ public class AllStopwatchRule implements TestRule {
             @Override
             public void evaluate() throws Throwable {
                 base.evaluate();
-                StringBuilder str = new StringBuilder();
-                str.append(" \n\nResult time for tests passes in Class: ")
-                        .append(description.getTestClass().getName()).append("\n");
-                StopwatchRule.results.forEach((a, b) -> str.append("   ")
-                        .append(String.format("%-25s", a))
-                        .append(b).append(" ms. \n"));
-                log.debug(str.toString());
-                StopwatchRule.results.clear();
+                log.debug(" \n\nResult time for tests passes in Class: {} \n{}",
+                        description.getTestClass().getName(),
+                        StopwatchRule.results);
+                StopwatchRule.results.setLength(0);
             }
         };
     }
