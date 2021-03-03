@@ -5,10 +5,9 @@ import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.javawebinar.topjava.repository.inmemory.InMemoryMealRepository;
 
 public class AllStopwatchRule implements TestRule {
-    private static final Logger log = LoggerFactory.getLogger(InMemoryMealRepository.class);
+    private static final Logger log = LoggerFactory.getLogger(AllStopwatchRule.class);
 
     @Override
     public Statement apply(Statement base, Description description) {
@@ -17,10 +16,10 @@ public class AllStopwatchRule implements TestRule {
             public void evaluate() throws Throwable {
                 base.evaluate();
                 StringBuilder str = new StringBuilder();
-                str.append(" \nResult time for tests passes in Class: ")
+                str.append(" \n\nResult time for tests passes in Class: ")
                         .append(description.getTestClass().getName()).append("\n");
-                StopwatchRule.results.forEach((a, b) -> str.append("*** Test ")
-                        .append(a).append(" passed in ")
+                StopwatchRule.results.forEach((a, b) -> str.append("   ")
+                        .append(String.format("%-25s", a))
                         .append(b).append(" ms. \n"));
                 log.debug(str.toString());
                 StopwatchRule.results.clear();

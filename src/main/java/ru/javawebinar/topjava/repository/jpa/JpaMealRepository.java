@@ -26,22 +26,16 @@ public class JpaMealRepository implements MealRepository {
             User ref = em.getReference(User.class, userId);
             meal.setUser(ref);
             em.persist(meal);
+            return meal;
         } else {
-            //Alternative way - slower
-            /*Meal updatedMeal = em.find(Meal.class, meal.getId());
-            User ref = em.getReference(User.class, userId);
-            meal.setUser(ref);
-            return updatedMeal.getUser().getId() == userId ? em.merge(meal) : null;*/
-
-            Query query = em.createNamedQuery(Meal.UPDATE)
-                    .setParameter("dt", meal.getDateTime())
-                    .setParameter("description", meal.getDescription())
-                    .setParameter("calories", meal.getCalories())
-                    .setParameter("mealId", meal.getId())
-                    .setParameter("userId", userId);
-            return query.executeUpdate() != 0 ? meal : null;
+            Meal updatedMeal = em.find(Meal.class, meal.getId());
+            if (updatedMeal != null) {
+                User ref = em.getReference(User.class, userId);
+                meal.setUser(ref);
+                return updatedMeal.getUser().getId() == userId ? em.merge(meal) : null;
+            }
+            return null;
         }
-        return meal;
     }
 
     @Override
@@ -56,10 +50,7 @@ public class JpaMealRepository implements MealRepository {
     @Override
     public Meal get(int id, int userId) {
         Meal m = em.find(Meal.class, id);
-        if (m != null && m.getUser().getId() == userId) {
-            return m;
-        }
-        return null;
+        return (m != null && m.getUser().getId() == userId) ? m : null;
     }
 
     @Override
