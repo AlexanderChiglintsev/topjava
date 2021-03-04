@@ -16,10 +16,9 @@ public class StopwatchRule extends Stopwatch {
         log.debug("Test method: {} passed in {} ms",
                 description.getMethodName(),
                 TimeUnit.NANOSECONDS.toMillis(nanos));
-        results.append(String.format("\t%-25s %s%s",
+        results.append(String.format("\t%-25s %s ms \n",
                 description.getMethodName(),
-                TimeUnit.NANOSECONDS.toMillis(nanos),
-                " ms \n")
+                TimeUnit.NANOSECONDS.toMillis(nanos))
         );
     }
 }
