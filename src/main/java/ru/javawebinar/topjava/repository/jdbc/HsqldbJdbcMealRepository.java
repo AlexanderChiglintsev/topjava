@@ -21,5 +21,4 @@ public class HsqldbJdbcMealRepository extends AbstractJdbcMealRepository<Date> {
     protected Date convertDate(LocalDateTime dateTime) {
         return Timestamp.valueOf(dateTime);
     }
-
 }

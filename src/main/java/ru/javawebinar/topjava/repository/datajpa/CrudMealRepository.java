@@ -30,13 +30,4 @@ public interface CrudMealRepository extends JpaRepository<Meal, Integer> {
             @Param("startDateTime") LocalDateTime startDateTime,
             @Param("endDateTime") LocalDateTime endDateTime
     );
-
-    /*List<Meal> findAllUser_IdOrderByDateTimeDesc(int userId);
-
-    List<Meal> findAllByUser_IdAndDateTimeAfterAndDateTimeBeforeOrderByDateTimeDesc(
-            int userId,
-            LocalDateTime startDate,
-            LocalDateTime endDate
-    );*/
-
 }
