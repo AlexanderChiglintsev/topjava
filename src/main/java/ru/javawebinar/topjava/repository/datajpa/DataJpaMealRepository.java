@@ -7,7 +7,6 @@ import ru.javawebinar.topjava.repository.MealRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public class DataJpaMealRepository implements MealRepository {
@@ -37,8 +36,10 @@ public class DataJpaMealRepository implements MealRepository {
 
     @Override
     public Meal get(int id, int userId) {
-        Optional<Meal> optionalMeal = mealCrudRepo.findById(id).filter(m -> m.getUser().getId() == userId);
-        return optionalMeal.orElse(null);
+        return mealCrudRepo
+                .findById(id)
+                .filter(m -> m.getUser().getId() == userId)
+                .orElse(null);
     }
 
     @Override
