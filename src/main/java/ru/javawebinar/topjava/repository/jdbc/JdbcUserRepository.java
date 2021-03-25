@@ -33,7 +33,7 @@ public class JdbcUserRepository implements UserRepository {
     private final SimpleJdbcInsert insertUser;
 
     private final ResultSetExtractor<List<User>> resultSetExtractor = rs -> {
-        Map<Integer, User> usersMap = new HashMap<>();
+        Map<Integer, User> usersMap = new LinkedHashMap<>();
         while (rs.next()) {
             int id = rs.getInt("id");
             if (!usersMap.containsKey(rs.getInt("id"))) {
@@ -94,9 +94,6 @@ public class JdbcUserRepository implements UserRepository {
         if (user.isNew()) {
             Number newKey = insertUser.executeAndReturnKey(parameterSource);
             user.setId(newKey.intValue());
-            jdbcTemplate.batchUpdate("""
-                    INSERT INTO user_roles (user_id, role) values (?,?)
-                    """, batchPreparedStatementSetter);
         } else if (namedParameterJdbcTemplate.update("""
                    UPDATE users SET name=:name, email=:email, password=:password, 
                    registered=:registered, enabled=:enabled, calories_per_day=:caloriesPerDay WHERE id=:id
@@ -104,10 +101,10 @@ public class JdbcUserRepository implements UserRepository {
             return null;
         } else {
             jdbcTemplate.update("DELETE FROM user_roles WHERE user_id=?", user.id());
-            jdbcTemplate.batchUpdate("""
+        }
+        jdbcTemplate.batchUpdate("""
                     INSERT INTO user_roles (user_id, role) values (?,?)
                     """, batchPreparedStatementSetter);
-        }
         return user;
     }
 

@@ -13,7 +13,6 @@ import ru.javawebinar.topjava.repository.JpaUtil;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import javax.validation.ConstraintViolationException;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -36,15 +35,10 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     @Lazy
     protected JpaUtil jpaUtil;
 
-    private boolean isJdbcProfile;
-
-    //protected boolean isJdbcProfile = Arrays.toString(env.getActiveProfiles()).contains("jdbc");
-
     @Before
     public void setup() {
-        isJdbcProfile = Arrays.toString(env.getActiveProfiles()).contains("jdbc");
         cacheManager.getCache("users").clear();
-        if (!isJdbcProfile) {
+        if (!isJdbcProfile(env)) {
             jpaUtil.clear2ndLevelHibernateCache();
         }
     }
