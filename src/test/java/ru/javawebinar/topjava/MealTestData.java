@@ -8,7 +8,9 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import static java.time.LocalDateTime.of;
+import static ru.javawebinar.topjava.UserTestData.user;
 import static ru.javawebinar.topjava.model.AbstractBaseEntity.START_SEQ;
+import static ru.javawebinar.topjava.util.MealsUtil.getTos;
 
 public class MealTestData {
     public static final TestMatcher<Meal> MEAL_MATCHER = TestMatcher.usingIgnoringFieldsComparator(Meal.class, "user");
@@ -29,6 +31,15 @@ public class MealTestData {
     public static final Meal adminMeal2 = new Meal(ADMIN_MEAL_ID + 1, of(2020, Month.JANUARY, 31, 21, 0), "Админ ужин", 1500);
 
     public static final List<Meal> meals = List.of(meal7, meal6, meal5, meal4, meal3, meal2, meal1);
+    public static final List<MealTo> mealTos = getTos(meals, user.getCaloriesPerDay());
+
+    public static final MealTo mealTo1 = mealTos.get(6);
+    public static final MealTo mealTo2 = mealTos.get(5);
+    public static final MealTo mealTo3 = mealTos.get(4);
+    public static final MealTo mealTo4 = mealTos.get(3);
+    public static final MealTo mealTo5 = mealTos.get(2);
+    public static final MealTo mealTo6 = mealTos.get(1);
+    public static final MealTo mealTo7 = mealTos.get(0);
 
     public static Meal getNew() {
         return new Meal(null, of(2020, Month.FEBRUARY, 1, 18, 0), "Созданный ужин", 300);

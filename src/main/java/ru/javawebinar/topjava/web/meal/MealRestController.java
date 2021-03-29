@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.web.meal;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -9,10 +10,8 @@ import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.to.MealTo;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
-
-import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalDate;
-import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalTime;
 
 @RestController
 @RequestMapping(value = MealRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -57,15 +56,15 @@ public class MealRestController extends AbstractMealController {
 
     @GetMapping("/filtered")
     public List<MealTo> getBetweenWithRest(
-            @RequestParam(required = false) String startDate,
-            @RequestParam(required = false) String startTime,
-            @RequestParam(required = false) String endDate,
-            @RequestParam(required = false) String endTime) {
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startTime,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endTime) {
         return super.getBetween(
-                parseLocalDate(startDate),
-                parseLocalTime(startTime),
-                parseLocalDate(endDate),
-                parseLocalTime(endTime)
+                startDate != null ? startDate.toLocalDate() : null,
+                startTime != null ? startTime.toLocalTime() : null,
+                endDate != null ? endDate.toLocalDate() : null,
+                endTime != null ? endTime.toLocalTime() : null
         );
     }
 }
