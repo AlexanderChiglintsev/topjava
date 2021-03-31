@@ -1,17 +1,22 @@
 package ru.javawebinar.topjava.web.meal;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.javawebinar.topjava.MealTestData;
+import ru.javawebinar.topjava.TestUtil;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
+import ru.javawebinar.topjava.to.MealTo;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 import ru.javawebinar.topjava.web.json.JsonUtil;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -51,7 +56,8 @@ class MealRestControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MEALTO_MATCHER.contentJson(mealTos));
+                .andExpect(result -> Assertions.assertThat(getActual(result))
+                        .isEqualTo(mealTos));
     }
 
     @Test
@@ -83,26 +89,32 @@ class MealRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getBetweenWithStartDate() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + "filtered?startDate=2020-01-31"))
+        perform(MockMvcRequestBuilders.get(REST_URL + "filtered")
+                .param("startDate", "2020-01-31"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MEALTO_MATCHER.contentJson(List.of(mealTo7, mealTo6, mealTo5, mealTo4)));
+                .andExpect(result -> Assertions.assertThat(getActual(result))
+                        .isEqualTo(List.of(mealTo7, mealTo6, mealTo5, mealTo4)));
     }
 
     @Test
     void getBetweenWithEndDate() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + "filtered?endDate=2020-01-30"))
+        perform(MockMvcRequestBuilders.get(REST_URL + "filtered")
+                .param("endDate", "2020-01-30"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MEALTO_MATCHER.contentJson(List.of(mealTo3, mealTo2, mealTo1)));
+                .andExpect(result -> Assertions.assertThat(getActual(result))
+                        .isEqualTo(List.of(mealTo3, mealTo2, mealTo1)));
     }
 
     @Test
     void getBetweenWithStartTime() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + "filtered?startTime=19:00"))
+        perform(MockMvcRequestBuilders.get(REST_URL + "filtered")
+                .param("startTime", "19:00"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MEALTO_MATCHER.contentJson(List.of(mealTo7, mealTo3)));
+                .andExpect(result -> Assertions.assertThat(getActual(result))
+                        .isEqualTo(List.of(mealTo7, mealTo3)));
     }
 
     @Test
@@ -110,17 +122,24 @@ class MealRestControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.get(REST_URL + "filtered"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MEALTO_MATCHER.contentJson(mealTos));
+                .andExpect(result -> Assertions.assertThat(getActual(result))
+                        .isEqualTo(mealTos));
     }
 
     @Test
     void getBetweenWithAllParams() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + "filtered?" +
-                                           "startDate=2020-01-31&endDate=2020-01-31&" +
-                                           "startTime=09:00&endTime=15:00"
-        ))
+        perform(MockMvcRequestBuilders.get(REST_URL + "filtered")
+                .param("startDate", "2020-01-31")
+                .param("endDate", "2020-01-31")
+                .param("startTime", "09:00")
+                .param("endTime", "15:00"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MEALTO_MATCHER.contentJson(List.of(mealTo6, mealTo5)));
+                .andExpect(result -> Assertions.assertThat(getActual(result))
+                        .isEqualTo(List.of(mealTo6, mealTo5)));
+    }
+
+    private List<MealTo> getActual(MvcResult result) throws UnsupportedEncodingException {
+        return JsonUtil.readValues(TestUtil.getContent(result), MealTo.class);
     }
 }
