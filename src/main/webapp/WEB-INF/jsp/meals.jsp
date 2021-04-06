@@ -37,11 +37,11 @@
                 </form>
             </div>
             <div class="card-footer text-right">
-                <button class="btn btn-danger" onclick="/*clearFilter()*/">
+                <button class="btn btn-danger" onclick="clearMealFilter()">
                     <span class="fa fa-remove"></span>
                     Отменить
                 </button>
-                <button class="btn btn-primary" onclick="/*ctx.updateTable()*/">
+                <button class="btn btn-primary" onclick="updateAndFilterTable()">
                     <span class="fa fa-filter"></span>
                     Отфильтровать
                 </button>
