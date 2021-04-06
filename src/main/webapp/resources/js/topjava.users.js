@@ -44,4 +44,18 @@ $(function () {
             ]
         })
     );
+
+    $(".enabled").click(function () {
+        setEnable($(this).closest('tr').attr("id"), $(this).is(":checked"));
+    });
 });
+
+function setEnable(id, enabled) {
+    $.ajax({
+        type: "POST",
+        url: ctx.ajaxUrl + id,
+        data: {enabled: enabled}
+    }).done(function () {
+        successNoty("State changed");
+    });
+}

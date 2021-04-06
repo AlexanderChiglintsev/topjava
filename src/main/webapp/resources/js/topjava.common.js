@@ -49,9 +49,9 @@ function save() {
     }).done(function () {
         $("#editRow").modal("hide");
         if (filtered) {
-            updateAndFilterTable();
+           updateAndFilterTable();
         } else {
-            updateTable();
+           updateTable();
         }
         successNoty("Saved");
     });
