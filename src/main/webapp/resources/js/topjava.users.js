@@ -52,10 +52,14 @@ $(function () {
 
 function setEnable(id, enabled) {
     $.ajax({
-        type: "POST",
-        url: ctx.ajaxUrl + id,
-        data: {enabled: enabled}
+        type: "PATCH",
+        url: ctx.ajaxUrl + id + "/" + enabled,
     }).done(function () {
-        successNoty("State changed");
+        $("[data-enabledUser][id='" +id+ "']").attr("data-enabledUser", enabled)
+        if (enabled) {
+            successNoty("User state: enabled.");
+        } else {
+            successNoty("User state: disabled.");
+        }
     });
 }

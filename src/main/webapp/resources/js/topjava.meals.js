@@ -44,11 +44,9 @@ function updateAndFilterTable() {
     $.get(ctx.ajaxUrl + "filter", $("#filter").serialize(), function (data) {
         ctx.datatableApi.clear().rows.add(data).draw();
     });
-    filtered = true;
 }
 
 function clearMealFilter() {
     $("#filter")[0].reset();
-    filtered = false;
     updateTable();
 }

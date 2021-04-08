@@ -1,5 +1,4 @@
 let form;
-let filtered = false;
 
 function makeEditable(datatableApi) {
     ctx.datatableApi = datatableApi;
@@ -48,11 +47,8 @@ function save() {
         data: form.serialize()
     }).done(function () {
         $("#editRow").modal("hide");
-        if (filtered) {
-           updateAndFilterTable();
-        } else {
-           updateTable();
-        }
+        //updateAndFilterTable();
+        updateTable();
         successNoty("Saved");
     });
 }

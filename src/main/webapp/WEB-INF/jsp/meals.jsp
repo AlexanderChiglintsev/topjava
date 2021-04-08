@@ -18,20 +18,20 @@
                 <form id="filter">
                     <div class="row">
                         <div class="col-2">
-                            <label for="startDate">От даты (включая)</label>
-                            <input class="form-control" name="startDate" id="startDate" autocomplete="off">
+                            <label for="startDate"><spring:message code="meal.startDate"/></label>
+                            <input class="form-control" name="startDate" id="startDate" type="date" autocomplete="off">
                         </div>
                         <div class="col-2">
-                            <label for="endDate">До даты (включая)</label>
-                            <input class="form-control" name="endDate" id="endDate" autocomplete="off">
+                            <label for="endDate"><spring:message code="meal.endDate"/></label>
+                            <input class="form-control" name="endDate" id="endDate" type="date" autocomplete="off">
                         </div>
                         <div class="offset-2 col-3">
-                            <label for="startTime">От времени (включая)</label>
-                            <input class="form-control" name="startTime" id="startTime" autocomplete="off">
+                            <label for="startTime"><spring:message code="meal.startTime"/></label>
+                            <input class="form-control" name="startTime" id="startTime" type="time" autocomplete="off">
                         </div>
                         <div class="col-3">
-                            <label for="endTime">До времени (исключая)</label>
-                            <input class="form-control" name="endTime" id="endTime" autocomplete="off">
+                            <label for="endTime"><spring:message code="meal.endTime"/></label>
+                            <input class="form-control" name="endTime" id="endTime" type="time" autocomplete="off">
                         </div>
                     </div>
                 </form>
@@ -39,11 +39,11 @@
             <div class="card-footer text-right">
                 <button class="btn btn-danger" onclick="clearMealFilter()">
                     <span class="fa fa-remove"></span>
-                    Отменить
+                    <spring:message code="common.cancel"/>
                 </button>
                 <button class="btn btn-primary" onclick="updateAndFilterTable()">
                     <span class="fa fa-filter"></span>
-                    Отфильтровать
+                    <spring:message code="meal.filter"/>
                 </button>
             </div>
         </div>
