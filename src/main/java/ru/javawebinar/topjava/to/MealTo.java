@@ -1,32 +1,25 @@
 package ru.javawebinar.topjava.to;
 
-import org.hibernate.validator.constraints.Range;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.beans.ConstructorProperties;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class MealTo extends BaseTo {
 
-    @NotNull
     private final LocalDateTime dateTime;
 
-    @NotBlank
     private final String description;
 
-    @Range(min = 10, max = 5000)
     private final int calories;
 
-    private final Boolean excess;
+    private final boolean excess;
 
     @ConstructorProperties({"id", "dateTime", "description", "calories", "excess"})
-    public MealTo(Integer id, LocalDateTime dateTime, String description, Integer calories, Boolean excess) {
+    public MealTo(Integer id, LocalDateTime dateTime, String description, int calories, boolean excess) {
         super(id);
         this.dateTime = dateTime;
         this.description = description;
-        this.calories = (calories == null ? 0 : calories);
+        this.calories = calories;
         this.excess = excess;
     }
 
@@ -52,10 +45,10 @@ public class MealTo extends BaseTo {
         if (o == null || getClass() != o.getClass()) return false;
         MealTo mealTo = (MealTo) o;
         return calories == mealTo.calories &&
-                excess == mealTo.excess &&
-                Objects.equals(id, mealTo.id) &&
-                Objects.equals(dateTime, mealTo.dateTime) &&
-                Objects.equals(description, mealTo.description);
+               excess == mealTo.excess &&
+               Objects.equals(id, mealTo.id) &&
+               Objects.equals(dateTime, mealTo.dateTime) &&
+               Objects.equals(description, mealTo.description);
     }
 
     @Override
@@ -66,11 +59,11 @@ public class MealTo extends BaseTo {
     @Override
     public String toString() {
         return "MealTo{" +
-                "id=" + id +
-                ", dateTime=" + dateTime +
-                ", description='" + description + '\'' +
-                ", calories=" + calories +
-                ", excess=" + excess +
-                '}';
+               "id=" + id +
+               ", dateTime=" + dateTime +
+               ", description='" + description + '\'' +
+               ", calories=" + calories +
+               ", excess=" + excess +
+               '}';
     }
 }
