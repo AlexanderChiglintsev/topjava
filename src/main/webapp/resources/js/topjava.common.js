@@ -96,7 +96,7 @@ function successNoty(key) {
 function failNoty(jqXHR) {
     closeNoty();
     var errorInfo = jqXHR.responseJSON;
-    var errType;
+    var errType = "";
     switch(errorInfo.type) {
         case 'VALIDATION_ERROR':
             errType = "Data validation failed!"

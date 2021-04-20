@@ -23,6 +23,7 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 import javax.servlet.http.HttpServletRequest;
 
 import static ru.javawebinar.topjava.util.exception.ErrorType.*;
+import static ru.javawebinar.topjava.web.GlobalExceptionHandler.getMessage;
 
 @RestControllerAdvice(annotations = RestController.class)
 @Order(Ordered.HIGHEST_PRECEDENCE + 5)
@@ -39,6 +40,14 @@ public class ExceptionInfoHandler {
     @ResponseStatus(HttpStatus.CONFLICT)  // 409
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ErrorInfo conflict(HttpServletRequest req, DataIntegrityViolationException e) {
+        if (e.getRootCause() != null) {
+            String errMsg = getMessage(e.getRootCause().getMessage());
+            if (errMsg.contains(" email ") || errMsg.contains(" datetime ")) {
+                return new ErrorInfo(req.getRequestURL(),
+                        DATA_ERROR,
+                        errMsg);
+            }
+        }
         return logAndGetErrorInfo(req, e, true, DATA_ERROR, "");
     }
 
@@ -49,15 +58,8 @@ public class ExceptionInfoHandler {
     }
 
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)  // 422
-    @ExceptionHandler(BindException.class)
+    @ExceptionHandler({BindException.class, MethodArgumentNotValidException.class})
     public ErrorInfo bindingError(HttpServletRequest req, BindException e) {
-        String err = ValidationUtil.getErrorResponse(e.getBindingResult());
-        return logAndGetErrorInfo(req, e, false, VALIDATION_ERROR, err);
-    }
-
-    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)  // 422
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ErrorInfo bindingErrorJson(HttpServletRequest req, BindException e) {
         String err = ValidationUtil.getErrorResponse(e.getBindingResult());
         return logAndGetErrorInfo(req, e, false, VALIDATION_ERROR, err);
     }
