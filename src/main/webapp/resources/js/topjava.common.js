@@ -96,9 +96,25 @@ function successNoty(key) {
 function failNoty(jqXHR) {
     closeNoty();
     var errorInfo = jqXHR.responseJSON;
+    var errType;
+    switch(errorInfo.type) {
+        case 'VALIDATION_ERROR':
+            errType = "Data validation failed!"
+            break;
+        case 'APP_ERROR':
+            errType = "Internal server error!"
+            break;
+        case 'DATA_ERROR':
+            errType = "Uncorrect data!"
+            break;
+        case 'DATA_NOT_FOUND':
+            errType = "Data is not found!"
+            break;
+
+    }
     failedNote = new Noty({
         text: "<span class='fa fa-lg fa-exclamation-circle'></span> &nbsp;" + i18n["common.errorStatus"] + ": " + jqXHR.status +
-            "<br>" + errorInfo.type + "<br>" + errorInfo.detail,
+            "<br>" + errType + "<br>" + errorInfo.detail,
         type: "error",
         layout: "bottomRight"
     });
