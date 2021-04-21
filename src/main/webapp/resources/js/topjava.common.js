@@ -97,24 +97,37 @@ function failNoty(jqXHR) {
     closeNoty();
     var errorInfo = jqXHR.responseJSON;
     var errType = "";
+    var details = "";
     switch(errorInfo.type) {
         case 'VALIDATION_ERROR':
-            errType = "Data validation failed!"
+            errType = i18n["exception.validation"];
+            details = errorInfo.detail.join("</br>")
             break;
         case 'APP_ERROR':
-            errType = "Internal server error!"
+            errType = i18n["exception.appError"];
+            details = errorInfo.detail.join("</br>")
             break;
         case 'DATA_ERROR':
-            errType = "Uncorrect data!"
+            errType = i18n["exception.dataError"];
+            details = errorInfo.detail.join("</br>")
             break;
         case 'DATA_NOT_FOUND':
-            errType = "Data is not found!"
+            errType = i18n["exception.notFound"];
+            details = errorInfo.detail.join("</br>")
+            break;
+        case 'EMAIL_NOT_UNIQUE':
+            errType = i18n["exception.dataError"];
+            details = i18n["exception.email"];
+            break;
+        case 'DATETIME_NOT_UNIQUE':
+            errType = i18n["exception.dataError"];
+            details = i18n["exception.datetime"];
             break;
 
     }
     failedNote = new Noty({
         text: "<span class='fa fa-lg fa-exclamation-circle'></span> &nbsp;" + i18n["common.errorStatus"] + ": " + jqXHR.status +
-            "<br>" + errType + "<br>" + errorInfo.detail,
+            "<br>" + errType + "<br>" + details,
         type: "error",
         layout: "bottomRight"
     });
