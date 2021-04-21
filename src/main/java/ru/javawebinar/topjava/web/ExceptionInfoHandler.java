@@ -43,9 +43,7 @@ public class ExceptionInfoHandler {
         if (e.getRootCause() != null) {
             String errMsg = getMessage(e.getRootCause().getMessage());
             if (errMsg.contains(" email ") || errMsg.contains(" datetime ")) {
-                return new ErrorInfo(req.getRequestURL(),
-                        DATA_ERROR,
-                        errMsg);
+                return logAndGetErrorInfo(req, e, true, DATA_ERROR, errMsg);
             }
         }
         return logAndGetErrorInfo(req, e, true, DATA_ERROR, "");
